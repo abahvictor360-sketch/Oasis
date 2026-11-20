@@ -45,7 +45,7 @@ URL_MAP = [
 ]
 
 # Standalone word "Linphone" in user-visible text (not inside URLs, identifiers or file names).
-APP_WORD = re.compile(r"(?<![\w/.:@-])Linphone(?![\w/.@-])")
+APP_WORD = re.compile(r"(?<![\w/.:@-])Linphone(?![\w/@]|\.\w|-(?:android|iphone|sdk|desktop)\b)")
 
 changed = []
 
@@ -137,7 +137,7 @@ def rebrand_android(root: Path):
 
     # App name (an XML entity in every translation) + links.
     for f in sorted(res.glob("values*/strings.xml")):
-        edit(f, lambda t: map_urls(re.sub(r'<!ENTITY appName "[^"]*">', f'<!ENTITY appName "{APP}">', t)))
+        edit(f, lambda t: APP_WORD.sub(APP, map_urls(re.sub(r'<!ENTITY appName "[^"]*">', f'<!ENTITY appName "{APP}">', t))))
 
     # Brand colors. Upstream's "orange_main" is the primary brand color used throughout the theme.
     def colors(t):
