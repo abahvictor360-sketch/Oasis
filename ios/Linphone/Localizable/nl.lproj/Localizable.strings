@@ -364,7 +364,7 @@
 "7" = "7";
 "9" = "9";
 "assistant_invalid_uri_toast" = "Ongeldige URI";
-"[linphone.org/contact](https://linphone.org/contact)" = "[linphone.org/contact](https://linphone.org/contact)";
+"[linphone.org/contact](https://linphone.org/contact)" = "[oasisorchardtech.com/support](https://oasisorchardtech.com/support)";
 "*" = "*";
 "**%@**" = "**%@**";
 "#" = "#";
@@ -392,13 +392,13 @@
 "call_transfer_current_call_title" = "Verbind oproep door";
 "call_zrtp_sas_validation_skip" = "Sla over";
 "contact_dialog_delete_title" = "Verwijder %@?";
-"help_about_title" = "Over Linphone";
+"help_about_title" = "Over Oasis Phone";
 "settings_contacts_ldap_search_filter_title" = "Filter";
 "[https://sip.linphone.org](https://sip.linphone.org)" = "[https://sip.linphone.org](https://sip.linphone.org)";
 "5" = "5";
 "6" = "6";
 "8" = "8";
-"conversation_end_to_end_encrypted_bottom_sheet_link" = "https://linphone.org/en/features/#security";
+"conversation_end_to_end_encrypted_bottom_sheet_link" = "https://oasisorchardtech.com/services";
 "welcome_page_subtitle" = "in %@";
 "settings_contacts_ldap_search_base_title" = "Zoekbasis (mag niet leeg zijn)";
 "calls_count_label" = "%@ oproep";

@@ -365,7 +365,7 @@
 "conversation_end_to_end_encrypted_event_subtitle" = "Сообщения в этой беседе зашифрованы end-to-end шифрованием. Расшифровать их может только ваш собеседник.";
 "authentication_id" = "Идентификатор аутентификации (если отличается)";
 "settings_contacts_ldap_search_filter_title" = "База поиска (не может быть пустой)";
-"[linphone.org/contact](https://linphone.org/contact)" = "[linphone.org/contact](https://linphone.org/contact)";
+"[linphone.org/contact](https://linphone.org/contact)" = "[oasisorchardtech.com/support](https://oasisorchardtech.com/support)";
 "*" = "*";
 "**%@**" = "**%@**";
 "#" = "#";

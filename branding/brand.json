@@ -1,0 +1,19 @@
+{
+  "app_name": "Oasis Phone",
+  "company_name": "Oasis Orchard Technologies",
+  "website": "https://oasisorchardtech.com",
+  "support_url": "https://oasisorchardtech.com/support",
+  "services_url": "https://oasisorchardtech.com/services",
+  "privacy_policy_url": "https://oasisorchardtech.com/p/privacy-policy",
+  "terms_url": "https://oasisorchardtech.com/p/terms-of-use",
+  "support_email": "support@oasisorchardtech.com",
+
+  "android_application_id": "com.oasisorchardtech.phone",
+  "android_apk_prefix": "oasis-phone-android",
+
+  "ios_bundle_id": "com.oasisorchardtech.phone",
+  "ios_development_team": "",
+
+  "color_primary": "#1BB0CE",
+  "color_primary_light": "#E0F7FB"
+}

@@ -1,0 +1,2 @@
+linphone-android master 2199af8323143e81738a040e48aad8e470ef81db
+linphone-iphone master 97783552a3c5da42ce2447874c9744c4136e5a02
