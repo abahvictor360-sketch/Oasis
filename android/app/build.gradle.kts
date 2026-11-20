@@ -122,7 +122,7 @@ android {
         variant.outputs
             .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
             .forEach { output ->
-                output.outputFileName = "oasis-phone-android-${variant.buildType.name}-$gitVersion.apk"
+                output.outputFileName = "oasis-android-${variant.buildType.name}-$gitVersion.apk"
             }
     }
 

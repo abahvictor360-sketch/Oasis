@@ -1,9 +1,9 @@
-# Oasis Phone
+# Oasis
 
 White-label SIP softphone for **[Oasis Orchard Technologies](https://oasisorchardtech.com)** — voice/video calls,
 messaging and meetings on Android and iPhone.
 
-Oasis Phone is a rebranded build of the open-source [Linphone](https://linphone.org) apps by
+Oasis is a rebranded build of the open-source [Linphone](https://linphone.org) apps by
 Belledonne Communications, distributed under the **GNU GPL v3** (see `android/LICENSE.txt`, `ios/LICENSE.txt`).
 
 | Folder | Contents | Upstream |
@@ -18,7 +18,7 @@ Exact upstream commits are recorded in `branding/UPSTREAM.txt`.
 
 | | Android | iOS |
 |---|---|---|
-| App name | `Oasis Phone` (all languages) | `Oasis Phone` (display name, share extension, strings in all languages, Siri phrases) |
+| App name | `Oasis` (all languages) | `Oasis` (display name, share extension, strings in all languages, Siri phrases) |
 | App ID | `com.oasisorchardtech.phone` | `com.oasisorchardtech.phone` (+ `.msgNotificationService`, `.linphoneExtension`, `.intentsExtension`) |
 | App group | — | `group.com.oasisorchardtech.phone.*` |
 | Colors | Primary `#1BB0CE`, light `#E0F7FB` (from oasisorchardtech.com) | Same, default theme + AccentColor |
@@ -63,7 +63,7 @@ branding/update-upstream.sh              # optional args: <android_ref> <ios_ref
    `group.com.oasisorchardtech.phone.msgNotification` / `group.com.oasisorchardtech.phone.linphoneExtension`;
    set `ios_development_team` in `brand.json` and re-run `rebrand.py` (or pick the team in Xcode).
 5. **Android signing.** Fill `android/keystore.properties` with your own release keystore (never commit it).
-6. **GPL v3 compliance.** Linphone is GPL v3, so Oasis Phone must be too: publish this repository's source
+6. **GPL v3 compliance.** Linphone is GPL v3, so Oasis must be too: publish this repository's source
    (or provide a written offer), keep the licence and copyright notices, and link the source from the app's
    store listing / website. Note that Apple's App Store terms are widely considered incompatible with GPL
    distribution; **Belledonne sells a proprietary licence** for exactly this case — talk to them

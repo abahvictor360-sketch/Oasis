@@ -1,5 +1,5 @@
 {
-  "app_name": "Oasis Phone",
+  "app_name": "Oasis",
   "company_name": "Oasis Orchard Technologies",
   "website": "https://oasisorchardtech.com",
   "support_url": "https://oasisorchardtech.com/support",
@@ -9,7 +9,7 @@
   "support_email": "support@oasisorchardtech.com",
 
   "android_application_id": "com.oasisorchardtech.phone",
-  "android_apk_prefix": "oasis-phone-android",
+  "android_apk_prefix": "oasis-android",
 
   "ios_bundle_id": "com.oasisorchardtech.phone",
   "ios_development_team": "",
