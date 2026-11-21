@@ -25,7 +25,7 @@ Exact upstream commits are recorded in `branding/UPSTREAM.txt`.
 | Icons | Adaptive + legacy launcher icons, splash icon, splash wordmark, notification icon, welcome logo, Play Store icon | App icon (1024), in-app logo |
 | Links | Contact/help → `/support`, download → `/services`, privacy → `/privacy`, terms → `/terms` (incl. the terms & privacy popup) | Same |
 | Account screens | *Register* → `oasisorchardtech.com/signup`, *Forgotten password* → `/forgot-password` (website, in the browser) | Same |
-| Debug-log email | `support@oasisorchardtech.com` | — |
+| Debug-log email | `support@oasisorchard.com` | — |
 | Upstream Firebase | `google-services.json` removed (it belongs to Linphone's Firebase project) | `GoogleService-Info.plist` left in place — **must be replaced** (see below) |
 | Signing | Your keystore via `keystore.properties` | `DEVELOPMENT_TEAM` cleared — set your Apple team |
 

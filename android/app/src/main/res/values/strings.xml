@@ -31,7 +31,7 @@
 
     <string name="help_about_open_source_licenses_title" translatable="false">GNU General Public License v3.0</string>
     <string name="help_about_open_source_licenses_subtitle" translatable="false">© Belledonne Communications 2010-2025</string>
-    <string name="help_advanced_send_debug_logs_email_address" translatable="false">support@oasisorchardtech.com</string>
+    <string name="help_advanced_send_debug_logs_email_address" translatable="false">support@oasisorchard.com</string>
 
     <string name="oasis_login_url" translatable="false">https://oasisorchardtech.com/login</string>
     <string name="oasis_signup_url" translatable="false">https://oasisorchardtech.com/signup</string>
