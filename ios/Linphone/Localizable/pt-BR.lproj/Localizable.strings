@@ -512,8 +512,8 @@
 "uri_handler_config_failed_toast" = "Falha na configuração";
 "web_platform_register_email_url" = "https://subscribe.linphone.org/register/email";
 "website_open_source_licences_usage_url" = "https://wiki.linphone.org/xwiki/wiki/public/view/Linphone/Third%20party%20components%20/";
-"website_privacy_policy_url" = "https://oasisorchardtech.com/p/privacy-policy";
-"website_terms_and_conditions_url" = "https://oasisorchardtech.com/p/terms-of-use";
+"website_privacy_policy_url" = "https://oasisorchardtech.com/privacy";
+"website_terms_and_conditions_url" = "https://oasisorchardtech.com/terms";
 "website_translate_weblate_url" = "https://weblate.linphone.org/";
 "[https://sip.linphone.org](https://sip.linphone.org)" = "[https://sip.linphone.org](https://sip.linphone.org)";
 ": %@" = ": %@";

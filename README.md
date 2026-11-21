@@ -23,7 +23,8 @@ Exact upstream commits are recorded in `branding/UPSTREAM.txt`.
 | App group | — | `group.com.oasisorchardtech.phone.*` |
 | Colors | Primary `#1BB0CE`, light `#E0F7FB` (from oasisorchardtech.com) | Same, default theme + AccentColor |
 | Icons | Adaptive + legacy launcher icons, splash icon, splash wordmark, notification icon, welcome logo, Play Store icon | App icon (1024), in-app logo |
-| Links | Contact/help → `/support`, download → `/services`, privacy → `/p/privacy-policy`, terms → `/p/terms-of-use` | Same |
+| Links | Contact/help → `/support`, download → `/services`, privacy → `/privacy`, terms → `/terms` (incl. the terms & privacy popup) | Same |
+| Account screens | *Register* → `oasisorchardtech.com/signup`, *Forgotten password* → `/forgot-password` (website, in the browser) | Same |
 | Debug-log email | `support@oasisorchardtech.com` | — |
 | Upstream Firebase | `google-services.json` removed (it belongs to Linphone's Firebase project) | `GoogleService-Info.plist` left in place — **must be replaced** (see below) |
 | Signing | Your keystore via `keystore.properties` | `DEVELOPMENT_TEAM` cleared — set your Apple team |
@@ -57,8 +58,8 @@ branding/update-upstream.sh              # optional args: <android_ref> <ios_ref
    - iOS: replace `ios/GoogleService-Info.plist` and `ios/msgNotificationService/GoogleService-Info.plist` with
      your own; create an APNs VoIP certificate/key for the new bundle id.
    - Your SIP server (or a Flexisip proxy) must send the pushes.
-3. **Website pages.** Publish `/p/privacy-policy` and `/p/terms-of-use` on oasisorchardtech.com (both stores
-   require a privacy-policy URL), or change the URLs in `brand.json`.
+3. **Website pages.** The app links to `/privacy`, `/terms`, `/signup` and `/forgot-password`, which exist in the
+   current website code (`oasisorchardtech-mysql`). Make sure that version is the one live on oasisorchardtech.com.
 4. **iOS identifiers.** In the Apple Developer portal register the 4 bundle ids above and the app groups
    `group.com.oasisorchardtech.phone.msgNotification` / `group.com.oasisorchardtech.phone.linphoneExtension`;
    set `ios_development_team` in `brand.json` and re-run `rebrand.py` (or pick the team in Xcode).

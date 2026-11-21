@@ -111,10 +111,14 @@ class LandingFragment : GenericFragment() {
         }
 
         binding.setForgottenPasswordClickListener {
-            if (findNavController().currentDestination?.id == R.id.landingFragment) {
-                val action =
-                    LandingFragmentDirections.actionLandingFragmentToRecoverAccountFragment()
-                findNavController().navigate(action)
+            // Oasis: password reset happens on the website
+            try {
+                val url = getString(R.string.oasis_forgot_password_url)
+                startActivity(
+                    Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url))
+                )
+            } catch (e: Exception) {
+                Log.e("$TAG Can't open Oasis website: $e")
             }
         }
 
@@ -159,9 +163,14 @@ class LandingFragment : GenericFragment() {
     }
 
     private fun goToRegisterFragment() {
-        if (findNavController().currentDestination?.id == R.id.landingFragment) {
-            val action = LandingFragmentDirections.actionLandingFragmentToRegisterFragment()
-            findNavController().navigate(action)
+        // Oasis: account creation happens on the website
+        try {
+            val url = getString(R.string.oasis_signup_url)
+            startActivity(
+                Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url))
+            )
+        } catch (e: Exception) {
+            Log.e("$TAG Can't open Oasis website: $e")
         }
     }
 

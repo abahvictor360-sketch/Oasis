@@ -80,10 +80,14 @@ class ThirdPartySipAccountWarningFragment : GenericFragment() {
         }
 
         binding.setCreateAccountClickListener {
-            if (findNavController().currentDestination?.id == R.id.thirdPartySipAccountWarningFragment) {
-                val action =
-                    ThirdPartySipAccountWarningFragmentDirections.actionThirdPartySipAccountWarningFragmentToRegisterFragment()
-                findNavController().navigate(action)
+            // Oasis: account creation happens on the website
+            try {
+                val url = getString(R.string.oasis_signup_url)
+                startActivity(
+                    Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url))
+                )
+            } catch (e: Exception) {
+                Log.e("$TAG Can't open Oasis website: $e")
             }
         }
 

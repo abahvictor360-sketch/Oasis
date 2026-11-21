@@ -61,8 +61,8 @@ struct LoginFragment: View {
 					}
 					
 					if self.isShowPopup {
-						let generalTerms = String(format: "[%@](%@)", String(localized: "assistant_dialog_general_terms_label"), "https://oasisorchardtech.com/p/terms-of-use")
-						let privacyPolicy = String(format: "[%@](%@)", String(localized: "assistant_dialog_privacy_policy_label"), "https://oasisorchardtech.com/p/privacy-policy")
+						let generalTerms = String(format: "[%@](%@)", String(localized: "assistant_dialog_general_terms_label"), "https://oasisorchardtech.com/terms")
+						let privacyPolicy = String(format: "[%@](%@)", String(localized: "assistant_dialog_privacy_policy_label"), "https://oasisorchardtech.com/privacy")
 						let splitMsg = String(localized: "assistant_dialog_general_terms_and_privacy_policy_message").components(separatedBy: "%@")
 						if splitMsg.count == 3 { // We expect form of  STRING %A STRING %@ STRING
 							let contentPopup1 = Text(.init(splitMsg[0]))
@@ -257,8 +257,8 @@ struct LoginFragment: View {
 				.disabled(accountLoginViewModel.username.isEmpty || accountLoginViewModel.passwd.isEmpty)
 				.padding(.bottom)
 				
-				NavigationLink(destination: {
-					RecoverAccountFragment()
+				Button(action: {
+					UIApplication.shared.open(URL(string: "https://oasisorchardtech.com/forgot-password")!) // oasis-forgot
 				}, label: {
 					Text(String(localized: "assistant_forgotten_password"))
 						.underline()
@@ -355,28 +355,24 @@ struct LoginFragment: View {
 					.foregroundStyle(Color.grayMain2c700)
 					.padding(.horizontal, 10)
 				
-				NavigationLink(destination: RegisterFragment(), isActive: $isLinkREGActive, label: { Text("assistant_account_register")
+				Button(action: {
+					self.linkActive = "REG"
+					if !SharedMainViewModel.shared.generalTermsAccepted {
+						withAnimation {
+							self.isShowPopup.toggle()
+						}
+					} else {
+						UIApplication.shared.open(URL(string: "https://oasisorchardtech.com/signup")!) // oasis-signup
+					}
+				}, label: { Text("assistant_account_register")
 						.default_text_style_white_600(styleSize: 20)
 						.frame(height: 35)
 				})
-				.disabled(!SharedMainViewModel.shared.generalTermsAccepted)
 				.padding(.horizontal, 20)
 				.padding(.vertical, 10)
 				.background(Color.orangeMain500)
 				.cornerRadius(60)
 				.padding(.horizontal, 10)
-				.simultaneousGesture(
-					TapGesture().onEnded {
-						self.linkActive = "REG"
-						if !SharedMainViewModel.shared.generalTermsAccepted {
-							withAnimation {
-								self.isShowPopup.toggle()
-							}
-						} else {
-							self.isLinkREGActive = true
-						}
-					}
-				)
 				
 				Spacer()
 			}
@@ -399,7 +395,7 @@ struct LoginFragment: View {
 		case "SIP":
 			self.isLinkSIPActive = true
 		case "REG":
-			self.isLinkREGActive = true
+			UIApplication.shared.open(URL(string: "https://oasisorchardtech.com/signup")!) // oasis-signup
 		default:
 			print("Link Not Active")
 		}

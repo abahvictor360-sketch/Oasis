@@ -241,6 +241,138 @@ def rebrand_ios(root: Path):
     write_if_changed(logo, (ASSETS / "logo-mark.svg").read_text(), old)
 
 
+# --------------------------------------------------------------------------- Website routing
+# "Register" and "Forgotten password" open the Oasis website instead of Linphone's
+# in-app account-creation / recovery screens (which talk to subscribe.linphone.org).
+
+def patch(path: Path, old: str, new: str):
+    """Replace `old` by `new` exactly once; no-op if already applied. Fails loudly if upstream changed."""
+    t = path.read_text(encoding="utf-8")
+    if new in t:
+        return
+    if t.count(old) != 1:
+        raise SystemExit(f"rebrand.py: expected snippet not found (upstream changed?) in {path}:\n{old}")
+    write_if_changed(path, t.replace(old, new), t)
+
+
+def android_open(url_res: str, indent: str) -> str:
+    return (f"{indent}try {{\n"
+            f"{indent}    val url = getString(R.string.{url_res})\n"
+            f"{indent}    startActivity(\n"
+            f"{indent}        Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url))\n"
+            f"{indent}    )\n"
+            f"{indent}}} catch (e: Exception) {{\n"
+            f"{indent}    Log.e(\"$TAG Can't open Oasis website: $e\")\n"
+            f"{indent}}}\n")
+
+
+def route_android(root: Path):
+    res = root / "app/src/main/res/values/strings.xml"
+    urls = (f'    <string name="oasis_login_url" translatable="false">{CFG["login_url"]}</string>\n'
+            f'    <string name="oasis_signup_url" translatable="false">{CFG["signup_url"]}</string>\n'
+            f'    <string name="oasis_forgot_password_url" translatable="false">{CFG["forgot_password_url"]}</string>\n')
+    t = res.read_text()
+    t = re.sub(r'    <string name="oasis_(login|signup|forgot_password)_url"[^\n]*\n', "", t)
+    t2 = t.replace('    <string name="website_contact_url"', urls + '    <string name="website_contact_url"', 1)
+    write_if_changed(res, t2, res.read_text())
+
+    frag = root / "app/src/main/java/org/linphone/ui/assistant/fragment"
+    patch(frag / "LandingFragment.kt",
+          """    private fun goToRegisterFragment() {
+        if (findNavController().currentDestination?.id == R.id.landingFragment) {
+            val action = LandingFragmentDirections.actionLandingFragmentToRegisterFragment()
+            findNavController().navigate(action)
+        }
+    }""",
+          "    private fun goToRegisterFragment() {\n        // Oasis: account creation happens on the website\n"
+          + android_open("oasis_signup_url", "        ") + "    }")
+    patch(frag / "LandingFragment.kt",
+          """        binding.setForgottenPasswordClickListener {
+            if (findNavController().currentDestination?.id == R.id.landingFragment) {
+                val action =
+                    LandingFragmentDirections.actionLandingFragmentToRecoverAccountFragment()
+                findNavController().navigate(action)
+            }
+        }""",
+          "        binding.setForgottenPasswordClickListener {\n            // Oasis: password reset happens on the website\n"
+          + android_open("oasis_forgot_password_url", "            ") + "        }")
+    patch(frag / "ThirdPartySipAccountWarningFragment.kt",
+          """        binding.setCreateAccountClickListener {
+            if (findNavController().currentDestination?.id == R.id.thirdPartySipAccountWarningFragment) {
+                val action =
+                    ThirdPartySipAccountWarningFragmentDirections.actionThirdPartySipAccountWarningFragmentToRegisterFragment()
+                findNavController().navigate(action)
+            }
+        }""",
+          "        binding.setCreateAccountClickListener {\n            // Oasis: account creation happens on the website\n"
+          + android_open("oasis_signup_url", "            ") + "        }")
+
+
+def route_ios(root: Path):
+    f = root / "Linphone/UI/Assistant/Fragments/LoginFragment.swift"
+    signup = f'UIApplication.shared.open(URL(string: "{CFG["signup_url"]}")!)'
+    forgot = f'UIApplication.shared.open(URL(string: "{CFG["forgot_password_url"]}")!)'
+    t = f.read_text()
+    # Refresh URLs if brand.json changed since a previous run
+    t2 = re.sub(r'UIApplication\.shared\.open\(URL\(string: "[^"]*"\)!\) // oasis-signup', signup + " // oasis-signup", t)
+    t2 = re.sub(r'UIApplication\.shared\.open\(URL\(string: "[^"]*"\)!\) // oasis-forgot', forgot + " // oasis-forgot", t2)
+    write_if_changed(f, t2, t)
+
+    patch(f, """				NavigationLink(destination: {
+					RecoverAccountFragment()
+				}, label: {
+					Text(String(localized: "assistant_forgotten_password"))""",
+          f"""				Button(action: {{
+					{forgot} // oasis-forgot
+				}}, label: {{
+					Text(String(localized: "assistant_forgotten_password"))""")
+    patch(f, """				NavigationLink(destination: RegisterFragment(), isActive: $isLinkREGActive, label: { Text("assistant_account_register")
+						.default_text_style_white_600(styleSize: 20)
+						.frame(height: 35)
+				})
+				.disabled(!SharedMainViewModel.shared.generalTermsAccepted)
+				.padding(.horizontal, 20)
+				.padding(.vertical, 10)
+				.background(Color.orangeMain500)
+				.cornerRadius(60)
+				.padding(.horizontal, 10)
+				.simultaneousGesture(
+					TapGesture().onEnded {
+						self.linkActive = "REG"
+						if !SharedMainViewModel.shared.generalTermsAccepted {
+							withAnimation {
+								self.isShowPopup.toggle()
+							}
+						} else {
+							self.isLinkREGActive = true
+						}
+					}
+				)""",
+          f"""				Button(action: {{
+					self.linkActive = "REG"
+					if !SharedMainViewModel.shared.generalTermsAccepted {{
+						withAnimation {{
+							self.isShowPopup.toggle()
+						}}
+					}} else {{
+						{signup} // oasis-signup
+					}}
+				}}, label: {{ Text("assistant_account_register")
+						.default_text_style_white_600(styleSize: 20)
+						.frame(height: 35)
+				}})
+				.padding(.horizontal, 20)
+				.padding(.vertical, 10)
+				.background(Color.orangeMain500)
+				.cornerRadius(60)
+				.padding(.horizontal, 10)""")
+    # After accepting the terms popup
+    patch(f, """		case "REG":
+			self.isLinkREGActive = true""",
+          f"""		case "REG":
+			{signup} // oasis-signup""")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--android", default=str(HERE.parent / "android"))
@@ -248,8 +380,10 @@ def main():
     a = ap.parse_args()
     if Path(a.android).is_dir():
         rebrand_android(Path(a.android))
+        route_android(Path(a.android))
     if Path(a.ios).is_dir():
         rebrand_ios(Path(a.ios))
+        route_ios(Path(a.ios))
     print(f"{len(changed)} files written")
 
 
